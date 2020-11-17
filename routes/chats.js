@@ -21,20 +21,15 @@ module.exports = function (app) {
         }
 
         case 'say': {
-          clients
-            .filter((c) => {
-              return (
-                c.user === data.recipient || c.user === data.sender
-              );
-            })
-            .forEach((client) =>
-              client.socket.send(
-                JSON.stringify({
-                  type: 'say',
-                  ...data,
-                }),
-              ),
+          clients.forEach((client) => {
+            client.socket.send(
+              JSON.stringify({
+                type: 'say',
+                ...data,
+              }),
             );
+          });
+
           break;
         }
       }
